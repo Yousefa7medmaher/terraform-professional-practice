@@ -1,0 +1,27 @@
+# Workspace env vars for a second credential set tagged "dns":
+#   TFC_AWS_PROVIDER_AUTH_dns = true
+#   TFC_AWS_RUN_ROLE_ARN_dns  = arn:aws:iam::222222222222:role/hcp-dns
+#
+# HCP Terraform injects this variable; declare it so you can reference it.
+variable "tfc_aws_dynamic_credentials" {
+  description = "Object containing AWS dynamic credentials configuration"
+  type = object({
+    default = object({
+      shared_config_file = string
+    })
+    aliases = map(object({
+      shared_config_file = string
+    }))
+  })
+}
+
+provider "aws" {
+  region              = "us-east-1"
+  shared_config_files = [var.tfc_aws_dynamic_credentials.default.shared_config_file]
+}
+
+provider "aws" {
+  alias               = "dns"
+  region              = "us-east-1"
+  shared_config_files = [var.tfc_aws_dynamic_credentials.aliases["dns"].shared_config_file]
+}

@@ -1,0 +1,10 @@
+import "tfrun"
+import "decimal"
+
+limit = decimal.new(500)
+
+delta = decimal.new(tfrun.cost_estimate.delta_monthly_cost)
+
+main = rule {
+	delta.less_than(limit)
+}

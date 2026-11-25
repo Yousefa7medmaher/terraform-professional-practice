@@ -1,0 +1,19 @@
+# Every module call must come from our private registry or be a local path.
+import "tfconfig/v2" as tfconfig
+import "strings"
+
+param organization default "YOUR_ORG"
+
+allowed_prefix = "app.terraform.io/" + organization + "/"
+
+violations = filter tfconfig.module_calls as _, mc {
+	not strings.has_prefix(mc.source, allowed_prefix) and
+	not strings.has_prefix(mc.source, "./") and
+	not strings.has_prefix(mc.source, "../")
+}
+
+print("Non-private modules:", violations)
+
+main = rule {
+	length(violations) is 0
+}

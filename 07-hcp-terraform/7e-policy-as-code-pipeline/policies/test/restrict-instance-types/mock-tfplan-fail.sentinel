@@ -1,0 +1,14 @@
+resource_changes = {
+	"aws_instance.web": {
+		"address": "aws_instance.web",
+		"mode":    "managed",
+		"type":    "aws_instance",
+		"name":    "web",
+		"change": {
+			"actions": ["create"],
+			"after": {
+				"instance_type": "m5.4xlarge",
+			},
+		},
+	},
+}

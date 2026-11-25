@@ -1,0 +1,17 @@
+# ~/.terraformrc  (Windows: %APPDATA%/terraform.rc)
+plugin_cache_dir = "$HOME/.terraform.d/plugin-cache"
+
+# Token for HCP Terraform / Terraform Enterprise (prefer `terraform login` or TF_TOKEN_* env vars)
+# credentials "app.terraform.io" {
+#   token = "xxxxxx.atlasv1.zzzzzzzzzzzzz"
+# }
+
+# Air-gapped / internal mirror for providers
+# provider_installation {
+#   network_mirror {
+#     url = "https://terraform-mirror.example.com/providers/"
+#   }
+#   direct {
+#     exclude = ["registry.terraform.io/*/*"]
+#   }
+# }

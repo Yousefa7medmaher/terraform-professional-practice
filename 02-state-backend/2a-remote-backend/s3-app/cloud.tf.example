@@ -1,0 +1,10 @@
+# Part C: replace the backend block with this and run `terraform init`.
+terraform {
+  cloud {
+    organization = "YOUR_ORG"
+
+    workspaces {
+      name = "practice-app-dev"
+    }
+  }
+}

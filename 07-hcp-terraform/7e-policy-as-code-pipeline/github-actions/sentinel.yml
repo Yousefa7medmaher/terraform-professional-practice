@@ -1,0 +1,22 @@
+name: sentinel
+
+on:
+  pull_request:
+    paths:
+      - "07-hcp-terraform/7e-policy-as-code-pipeline/policies/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 07-hcp-terraform/7e-policy-as-code-pipeline/policies
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Sentinel
+        run: |
+          VERSION=0.40.0
+          curl -sSLo sentinel.zip "https://releases.hashicorp.com/sentinel/${VERSION}/sentinel_${VERSION}_linux_amd64.zip"
+          unzip sentinel.zip -d /usr/local/bin
+      - run: sentinel fmt -check=true .
+      - run: sentinel test -verbose

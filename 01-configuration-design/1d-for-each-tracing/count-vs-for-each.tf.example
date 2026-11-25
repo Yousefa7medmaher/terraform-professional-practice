@@ -1,0 +1,8 @@
+# Rename to .tf (and comment out main.tf's subnet resource) to compare.
+# Removing "web" from the list shifts every index -> Terraform replaces resources it shouldn't.
+
+resource "local_file" "subnet_count" {
+  count    = length(var.tiers)
+  filename = "${path.module}/out/count/${var.tiers[count.index]}.txt"
+  content  = var.tiers[count.index]
+}

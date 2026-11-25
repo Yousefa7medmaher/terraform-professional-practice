@@ -1,0 +1,17 @@
+import "tfplan/v2" as tfplan
+
+required = ["owner", "cost_center"]
+
+taggable = filter tfplan.resource_changes as _, rc {
+	rc.mode is "managed" and
+	rc.type in ["aws_instance", "aws_s3_bucket", "aws_db_instance"] and
+	(rc.change.actions contains "create" or rc.change.actions contains "update")
+}
+
+main = rule {
+	all taggable as _, rc {
+		all required as t {
+			(rc.change.after.tags else {}) contains t
+		}
+	}
+}

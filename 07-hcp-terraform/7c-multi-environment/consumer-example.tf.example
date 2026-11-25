@@ -1,0 +1,9 @@
+# Inside the app-prod workspace configuration:
+data "tfe_outputs" "network" {
+  organization = "YOUR_ORG"
+  workspace    = "network-prod"
+}
+
+locals {
+  vpc_id = data.tfe_outputs.network.nonsensitive_values.vpc_id
+}

@@ -1,0 +1,8 @@
+module "token" {
+  source = "./modules/token"
+}
+
+moved {
+  from = random_string.token
+  to   = module.token.random_string.this
+}
